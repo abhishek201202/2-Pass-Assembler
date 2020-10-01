@@ -1,7 +1,8 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-struct Symbol{
+class Symbol{
+public:
 	string symbol, address;
 	Symbol(string symbol, string address){
 		this -> symbol = symbol;
@@ -9,7 +10,8 @@ struct Symbol{
 	}
 };
 
-struct MOT{
+class MOT{
+public:
 	string mnemonic, Class, code, size;
 	MOT(string mnemonic, string Class, string code, string size){
 		this -> mnemonic = mnemonic;
@@ -35,21 +37,24 @@ string n_to_base_k(int n,int r){
 string to_hex(string s){
 	string L = s.substr(0, 2);
 	string R = s.substr(2, 2);
-	R = n_to_base_k(stoi(R), 12);
+	R = n_to_base_k(stoi(R), 16);
 	return L + R;
 }
 
-struct TwoPassAssembler{
+class TwoPassAssembler{
+private:
 	int initial_address;
 	vector<string> source_code;
 	vector<string> source_code_address;
 	vector<vector<string>> machine_code;
 	vector<Symbol> symbols;
 	vector<MOT> mot;
+public:
 	TwoPassAssembler(vector<string> source_code, int initial_address){
 		this -> source_code = source_code;
 		this -> initial_address = initial_address;
 	}
+private:
 	void GenerateMachineOpcodeTable(){
 		fstream my_file;
     	my_file.open("opcode_table.txt", ios :: in);
@@ -155,7 +160,7 @@ struct TwoPassAssembler{
 	}
 	void ShowMachineCode(){
 		cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
-		cout << "~~~~~~~~  Second Pass Complete ...... ~~~~~~~~~~" << endl;
+		cout << "~~~~~~~~  Second Pass Completed ...... ~~~~~~~~~~" << endl;
 		cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
 		for(int i = 0; i < machine_code.size(); i++){
 			// for(int j = 0; j < machine_code[i].size(); j++){
@@ -176,7 +181,7 @@ struct TwoPassAssembler{
 
 	void ShowSymbols(){
 		cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
-		cout << "~~~~~~~~~~~~ First Pass Complete .... ~~~~~~~~~~" << endl;
+		cout << "~~~~~~~~~~~~ First Pass Completed .... ~~~~~~~~~~" << endl;
 		cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
 		for(int i = 0; i < symbols.size(); i++){
 			cout << symbols[i].symbol << " " << symbols[i].address << endl;
@@ -202,6 +207,7 @@ struct TwoPassAssembler{
 			cout << source_code[i] << endl;
 		}
 	}
+public:
 	void Run(){
 		GenerateMachineOpcodeTable();
 		// ShowSourceCode();
@@ -225,9 +231,7 @@ void info(){
 
 int32_t main(){
 	info();
-	int init_address;
-	cout << "Enter the starting Address :: "; cin >> init_address;
-	cout << endl;
+	int init_address = 2000;
 	fstream my_file;
 	my_file.open("input.txt", ios :: in);
 	vector<string> source_code;
