@@ -145,7 +145,6 @@ private:
                 string F = s.substr(0, idx);
                 string S = s.substr(idx + 1, 4);
                 // S.pop_back();
-                // cout << "F :: " << F << " mn :: " << mn << endl; 
                 for(int j = 0; j < mot.size(); j++){
                     if(mot[j].mnemonic == mn && mot[j].Class == F){
                         res.push_back(mot[j].code);
